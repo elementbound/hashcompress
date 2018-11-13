@@ -21,7 +21,7 @@ public class HashCompressorFactory {
      * @param blockSize block size
      * @return new instance
      */
-    public static HashCompressor getHashCompress(int blockSize) {
+    public static ReportingHashCompressor getHashCompress(int blockSize) {
         MessageDigest digest = getDigest(MD5);
 
         DigestUtils digestUtils = new DigestUtils(digest);

@@ -1,7 +1,7 @@
 package com.github.elementbound.hashcompress;
 
-import com.github.elementbound.hashcompress.enhash.HashCompressor;
 import com.github.elementbound.hashcompress.enhash.HashCompressorFactory;
+import com.github.elementbound.hashcompress.enhash.ReportingHashCompressor;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +24,14 @@ public class Main {
         InputStream inputStream = new FileInputStream(inputFile);
         OutputStream outputStream = new FileOutputStream(outputFile);
 
-        HashCompressor hashCompressor = HashCompressorFactory.getHashCompress(blockSize);
+        ReportingHashCompressor hashCompressor = HashCompressorFactory.getHashCompress(blockSize);
+        hashCompressor.onProgress(progress -> {
+            if (!progress.isDone()) {
+                System.out.printf("Blocks done: %d\r", progress.getBlocksDone());
+            } else {
+                System.out.printf("\nDone!\n");
+            }
+        });
 
         switch (mode) {
             case COMPRESS:
