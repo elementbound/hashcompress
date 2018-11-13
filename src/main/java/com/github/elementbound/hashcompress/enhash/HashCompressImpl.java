@@ -1,6 +1,7 @@
 package com.github.elementbound.hashcompress.enhash;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ public class HashCompressImpl {
     public void compress(InputStream in, OutputStream out) throws IOException {
         byte[] inputBuffer = new byte[decompressedBlockSize];
 
-        while (in.read(inputBuffer) > 0) {
+        while (IOUtils.read(in, inputBuffer) > 0) {
             out.write(enhash.consume(inputBuffer));
         }
     }
@@ -33,7 +34,7 @@ public class HashCompressImpl {
     public void decompress(InputStream in, OutputStream out) throws IOException {
         byte[] inputBuffer = new byte[compressedBlockSize];
 
-        while (in.read(inputBuffer) > 0) {
+        while (IOUtils.read(in, inputBuffer) > 0) {
             out.write(dehash.consume(inputBuffer));
         }
     }

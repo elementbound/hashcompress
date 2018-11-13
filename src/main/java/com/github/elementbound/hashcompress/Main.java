@@ -23,7 +23,7 @@ public class Main {
         InputStream inputStream = new FileInputStream(inputFile);
         OutputStream outputStream = new FileOutputStream(outputFile);
 
-        HashCompressImpl hashCompress = HashCompressFactory.getHashCompress(2);
+        HashCompressImpl hashCompress = HashCompressFactory.getHashCompress(3);
 
         switch (mode) {
             case COMPRESS:

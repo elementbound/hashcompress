@@ -1,7 +1,6 @@
 package com.github.elementbound.hashcompress.enhash;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -9,10 +8,10 @@ import java.util.Arrays;
  * Class to decompress a single block of data.
  */
 public class Dehash {
-    private final RandomBlockSupplier blockSupplier;
+    private final BlockSupplier blockSupplier;
     private final DigestUtils digestUtils;
 
-    public Dehash(RandomBlockSupplier blockSupplier, DigestUtils digestUtils) {
+    public Dehash(BlockSupplier blockSupplier, DigestUtils digestUtils) {
         this.blockSupplier = blockSupplier;
         this.digestUtils = digestUtils;
     }
@@ -24,10 +23,16 @@ public class Dehash {
      * @return decompressed data
      */
     public byte[] consume(byte[] data) {
-        while (true) {
-            byte[] block = ArrayUtils.toPrimitive(blockSupplier.get());
+        for (long i = 0; true; ++i) {
+            byte[] block = blockSupplier.getBytes();
+            byte[] hashed = digestUtils.digest(block);
 
-            if (Arrays.equals(digestUtils.digest(block), data)) {
+            // if ((i % 16384) == 0) {
+            //     System.out.printf("Dehashing attempt %d\r", i);
+            // }
+
+            if (Arrays.equals(hashed, data)) {
+                System.out.printf("Dehashing attempt %d success\n", i);
                 return block;
             }
         }
