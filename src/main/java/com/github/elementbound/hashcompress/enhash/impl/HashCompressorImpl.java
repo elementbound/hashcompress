@@ -1,5 +1,6 @@
-package com.github.elementbound.hashcompress.enhash;
+package com.github.elementbound.hashcompress.enhash.impl;
 
+import com.github.elementbound.hashcompress.enhash.HashCompressor;
 import com.github.elementbound.hashcompress.enhash.hash.Dehash;
 import com.github.elementbound.hashcompress.enhash.hash.Enhash;
 import com.github.elementbound.hashcompress.enhash.reporting.HashCompressorProgress;
@@ -8,19 +9,15 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Simple {@link HashCompressor} implementation.
  */
-public class HashCompressorImpl implements ReportingHashCompressor {
+public class HashCompressorImpl extends AbstractHashCompressor {
     private final int compressedBlockSize;
     private final int decompressedBlockSize;
     private final Enhash enhash;
     private final Dehash dehash;
-    private final List<Consumer<HashCompressorProgress>> subscribers = new ArrayList<>();
 
     public HashCompressorImpl(int compressedBlockSize, int decompressedBlockSize, Enhash enhash, Dehash dehash) {
         this.compressedBlockSize = compressedBlockSize;
@@ -55,23 +52,5 @@ public class HashCompressorImpl implements ReportingHashCompressor {
         broadcastProgress(new HashCompressorProgress(++blocksDone, true));
     }
 
-    @Override
-    public void onProgress(Consumer<HashCompressorProgress> consumer) {
-        subscribers.add(consumer);
-    }
 
-
-    private Consumer<byte[]> throwingWrite(OutputStream out) {
-        return chunk -> {
-            try {
-                out.write(chunk);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        };
-    }
-
-    private void broadcastProgress(HashCompressorProgress progress) {
-        subscribers.forEach(consumer -> consumer.accept(progress));
-    }
 }

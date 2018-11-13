@@ -2,6 +2,7 @@ package com.github.elementbound.hashcompress.enhash;
 
 import com.github.elementbound.hashcompress.enhash.hash.Dehash;
 import com.github.elementbound.hashcompress.enhash.hash.Enhash;
+import com.github.elementbound.hashcompress.enhash.impl.HashCompressorImpl;
 import com.github.elementbound.hashcompress.enhash.supplier.BlockSupplier;
 import com.github.elementbound.hashcompress.enhash.supplier.IterativeBlockSupplier;
 import org.apache.commons.codec.digest.DigestUtils;

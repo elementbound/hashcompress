@@ -23,7 +23,7 @@ public class Dehash {
      * @param data to decompress
      * @return decompressed data
      */
-    public byte[] consume(byte[] data) {
+    public synchronized byte[] consume(byte[] data) {
         while (true) {
             byte[] block = blockSupplier.getBytes();
             byte[] hashed = digestUtils.digest(block);
