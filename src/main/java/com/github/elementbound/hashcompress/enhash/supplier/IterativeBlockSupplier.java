@@ -1,7 +1,12 @@
-package com.github.elementbound.hashcompress.enhash;
+package com.github.elementbound.hashcompress.enhash.supplier;
 
 import java.util.Arrays;
 
+/**
+ * <p>Class to provide blocks in an iterative manner.
+ * <p>This class will treat each block as a huge binary number, and increment
+ * it on each call.
+ */
 public class IterativeBlockSupplier implements BlockSupplier {
     private final int blockSize;
     private final byte[] block;

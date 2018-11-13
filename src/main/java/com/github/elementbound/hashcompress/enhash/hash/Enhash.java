@@ -1,4 +1,4 @@
-package com.github.elementbound.hashcompress.enhash;
+package com.github.elementbound.hashcompress.enhash.hash;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

@@ -1,7 +1,10 @@
-package com.github.elementbound.hashcompress.enhash;
+package com.github.elementbound.hashcompress.enhash.supplier;
 
 import java.util.Random;
 
+/**
+ * Class to provide byte blocks with random contents.
+ */
 public class RandomBlockSupplier implements BlockSupplier {
     private final int blockSize;
     private final Random random;

@@ -1,7 +1,7 @@
 package com.github.elementbound.hashcompress;
 
-import com.github.elementbound.hashcompress.enhash.HashCompressFactory;
-import com.github.elementbound.hashcompress.enhash.HashCompressImpl;
+import com.github.elementbound.hashcompress.enhash.HashCompressor;
+import com.github.elementbound.hashcompress.enhash.HashCompressorFactory;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,33 +11,34 @@ import java.io.OutputStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        if (args.length != 3) {
+        if (args.length != 4) {
             printUsage();
             return;
         }
 
         Mode mode = Mode.fromString(args[0]);
-        String inputFile = args[1];
-        String outputFile = args[2];
+        int blockSize = Integer.parseInt(args[1]);
+        String inputFile = args[2];
+        String outputFile = args[3];
 
         InputStream inputStream = new FileInputStream(inputFile);
         OutputStream outputStream = new FileOutputStream(outputFile);
 
-        HashCompressImpl hashCompress = HashCompressFactory.getHashCompress(3);
+        HashCompressor hashCompressor = HashCompressorFactory.getHashCompress(blockSize);
 
         switch (mode) {
             case COMPRESS:
-                hashCompress.compress(inputStream, outputStream);
+                hashCompressor.compress(inputStream, outputStream);
                 break;
 
             case DECOMPRESS:
-                hashCompress.decompress(inputStream, outputStream);
+                hashCompressor.decompress(inputStream, outputStream);
                 break;
         }
     }
 
     private static void printUsage() {
-        System.out.println("Usage: hashcompress <compress|decompress> <input> <output>");
+        System.out.println("Usage: hashcompress <compress|decompress> <blockSize> <input> <output>");
     }
 
     private enum Mode {

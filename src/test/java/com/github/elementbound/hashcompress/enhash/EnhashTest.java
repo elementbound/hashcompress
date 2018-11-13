@@ -1,5 +1,6 @@
 package com.github.elementbound.hashcompress.enhash;
 
+import com.github.elementbound.hashcompress.enhash.hash.Enhash;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
